@@ -18,8 +18,13 @@ from distutils.sysconfig import get_python_lib, get_python_version
 if os.path.isfile("MANIFEST"):
     os.unlink("MANIFEST")
 
+def get_lua_version():
+    import subprocess
+    output = subprocess.check_output(('lua', '-v'), stderr=subprocess.STDOUT)
+    return '.'.join(output.split()[1].split('.')[:-1])
+
 # You may have to change these
-LUAVERSION = "5.2"
+LUAVERSION = get_lua_version()
 PYTHONVERSION = get_python_version()
 PYLIBS = ["python" + get_python_version(), "pthread", "util"]
 PYLIBDIR = [get_python_lib(standard_lib=True) + "/config"]
